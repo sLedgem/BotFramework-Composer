@@ -1,0 +1,25 @@
+{
+  "*": {
+    "runtimes": [
+      "*"
+    ],
+    "tags": [
+      "Basic"
+    ]
+  },
+  "InterruptionSample": {
+    "tags": [
+      "Advanced",
+      "Interuption"
+    ]
+  },
+  "QnaMakerLUISSample": {
+    "runtimes": [
+      "csharp*"
+    ],
+    "tags": [
+      "Advanced",
+      "QnaMaker"
+    ]
+  }
+}

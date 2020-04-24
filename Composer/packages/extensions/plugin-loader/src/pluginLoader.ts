@@ -32,6 +32,7 @@ export class PluginLoader {
         allowedUrls: [this.loginUri],
       },
       runtimeTemplates: [],
+      botTemplates: [],
     };
     this._passport = passport;
   }
