@@ -7,7 +7,6 @@ import fs from 'fs';
 const samplesDir = path.resolve(__dirname, '../assets/samples');
 const samplesRegitry = {
   '*': {  // base registry item, can be override by later specific entry
-    index: 1000000, 
     tags: ["Basic"],
     support: ["*"]
   },
@@ -61,12 +60,6 @@ const samplesRegitry = {
   }
 }
 
-
-
-function getSamplePaths(dir: string) {
-  const templateBase = {
-  }
-}
 
 function getSamples(): any[] {
   const paths = fs.readdirSync(samplesDir);
