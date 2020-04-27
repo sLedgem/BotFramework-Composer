@@ -62,30 +62,38 @@ const samplesRegitry = {
 
 
 function getSamples(): any[] {
-  const paths = fs.readdirSync(samplesDir);
-  console.log(paths);
+  const subPaths = fs.readdirSync(samplesDir);
   const samples = [];
-  for (const p in paths) {
-    if (!fs.statSync(p).isDirectory()) {
-      return;
+  for (const subPath of subPaths) {
+    if (!fs.statSync(samplesDir + "/" + subPath).isDirectory()) {
+      continue;
     }
 
     // only looking for directories
-    const dirname = path.basename(p);
-    if (samplesRegitry[dirname]) {
-      console.log(`Found sample ${dirname}`);
-    } 
-    else {
-      console.log(`Folder added in ${p}, but not registered`);
+    const dirname = subPath;
+    let sample = { id: dirname, name: dirname, description: dirname, ...samplesRegitry['*']};
+    if (samplesRegitry[sample.id]) {
+      sample = { ...sample, ...samplesRegitry[sample.id]};
     }
-
+    samples.push(sample);
   }
+  samples.sort((a, b) => {
+    if (a.index && b.index) {
+      return a.index - b.index;
+    }
+    if (a.index) {
+      return -1;
+    }
+    return 1;
+  })
+  return samples;
 }
 
+const samples = getSamples();
 
 export default async (composer: any): Promise<void> => {
   // register this publishing method with Composer
-  for (const temlate in getSamples()) {
-    //await composer.addBotTemplate(temlate);
+  for (const temlate of samples) {
+    await composer.addBotTemplate(temlate);
   }
 };

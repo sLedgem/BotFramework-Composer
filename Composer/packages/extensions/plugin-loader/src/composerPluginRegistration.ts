@@ -92,7 +92,7 @@ export class ComposerPluginRegistration {
   /**************************************************************************************
    * Bot Samples
    *************************************************************************************/
-  public addSample(template: BotTemplate) {
+  public addBotTemplate(template: BotTemplate) {
     this.loader.extensions.botTemplates.push(template);
   }
 
