@@ -66,3 +66,40 @@ jobs:
         condition: always()
         continueOnError: true
         workingDirectory: Composer
+  - job: security
+    displayName: Security Analysis
+    steps:
+    - task: NodeTool@0
+      displayName: "Use Node 12.13.0"
+      inputs:
+        versionSpec: 12.13.0
+    - task: CacheBeta@1
+      inputs:
+        key: yarn | $(Agent.OS) | Composer/yarn.lock
+        path: $(YARN_CACHE_FOLDER)
+        restoreKeys: |
+          yarn | $(Agent.OS)
+      displayName: Cache Yarn packages
+    - script: yarn --frozen-lock-file
+      displayName: yarn install
+      workingDirectory: Composer
+    - script: yarn build
+      displayName: yarn build
+      workingDirectory: Composer
+    - task: UseDotNet@2
+      inputs:
+        version: '3.1.x'
+        packageType: runtime
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet build'
+      inputs:
+        projects: BotProject/Templates/CSharp
+    - task: ComponentGovernanceComponentDetection@0
+      displayName: Component Detection
+      inputs:
+        scanType: 'Register'
+        verbosity: 'Verbose'
+        alertWarningLevel: 'High'
+
+
+
