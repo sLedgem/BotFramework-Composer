@@ -8,7 +8,7 @@ const samplesDir = path.resolve(__dirname, '../assets/samples');
 const samplesRegitry = {
   '*': {  // base registry item, can be override by later specific entry
     tags: ["Basic"],
-    support: ["*"]
+    support: ["C#", "JS"]
   },
   EchoBot: {
     name: 'Echo Bot',
@@ -65,13 +65,14 @@ function getSamples(): any[] {
   const subPaths = fs.readdirSync(samplesDir);
   const samples = [];
   for (const subPath of subPaths) {
-    if (!fs.statSync(samplesDir + "/" + subPath).isDirectory()) {
+    const fullPath = samplesDir + "/" + subPath;
+    if (!fs.statSync(fullPath).isDirectory()) {
       continue;
     }
 
     // only looking for directories
     const dirname = subPath;
-    let sample = { id: dirname, name: dirname, description: dirname, ...samplesRegitry['*']};
+    let sample = { id: dirname, name: dirname, description: dirname, path:fullPath, ...samplesRegitry['*']};
     if (samplesRegitry[sample.id]) {
       sample = { ...sample, ...samplesRegitry[sample.id]};
     }
