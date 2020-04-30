@@ -55,7 +55,7 @@
     "ts-node": "^8.4.1"
   },
   "dependencies": {
-    "@azure/ms-rest-js": "^1.8.7",
+    "@azure/ms-rest-js": "^2.0.6",
     "@bfc/client": "*",
     "@bfc/indexers": "*",
     "@bfc/lg-languageserver": "*",
